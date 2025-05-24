@@ -82,3 +82,21 @@ export function toSentenceCase(str: string) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+export function parseCookie(cookieString: string): Record<string, string> {
+  const cookies: Record<string, string> = {};
+  if (cookieString) {
+    const cookieArray = cookieString.split(";");
+    cookieArray.forEach((cookie) => {
+      const parts = cookie.split("=");
+      if (parts.length === 2) {
+        // @ts-ignore
+        const key = parts[0].trim();
+        // @ts-ignore
+        const value = parts[1].trim();
+        cookies[key] = value;
+      }
+    });
+  }
+  return cookies;
+}
