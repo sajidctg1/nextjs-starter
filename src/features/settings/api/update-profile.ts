@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { authClient } from "~/lib/auth-client";
 
 interface Input {
-  name: string;
-  image?: string;
+  name?: string;
+  image?: string | null;
 }
 
 export const useUpdateProfile = () => {

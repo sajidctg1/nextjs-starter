@@ -47,7 +47,7 @@ const fontList = [
   { name: "Libre Franklin", className: "font-libre-franklin" },
 ] as const;
 
-export default function AppearanceSettings() {
+export const AppearanceSettings = () => {
   const { theme, setTheme } = useTheme();
   const { font, setFont } = useFont();
 
@@ -129,7 +129,7 @@ export default function AppearanceSettings() {
                         className={cn(
                           "cursor-pointer rounded-md border-2 p-1 hover:bg-gray-300",
                           form.getValues("theme") === "light" &&
-                          "border-primary"
+                            "border-primary"
                         )}
                       >
                         <div className="space-y-2 rounded-sm bg-gray-300 p-2">
@@ -187,9 +187,11 @@ export default function AppearanceSettings() {
               </FormItem>
             )}
           />
-          <Button disabled={!form.formState.isDirty} type="submit">Update preferences</Button>
+          <Button disabled={!form.formState.isDirty} type="submit">
+            Update preferences
+          </Button>
         </GenericForm>
       </CardContent>
     </Card>
   );
-}
+};

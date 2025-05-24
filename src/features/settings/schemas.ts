@@ -31,15 +31,8 @@ export type UpdateNotificationPayload = z.infer<
 >;
 
 export const updateProfileSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Name must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Name must not be longer than 30 characters.",
-    }),
-  image: z.string().optional(),
+  name: z.string().min(2).max(30).optional(),
+  image: z.string().nullable(),
 });
 export type UpdateProfilePayload = z.infer<typeof updateProfileSchema>;
 

@@ -20,13 +20,13 @@ import {
 import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 
-import { useDeleteAccount } from "../api/delete-account";
+import { useDeleteAccount } from "../../api/delete-account";
 
 const schema = z.object({
   password: z.string().min(6),
 });
 
-export default function DeleteAccountDialog() {
+export const DeleteAccountDialog = () => {
   const { data: auth } = authClient.useSession();
   const [open, setOpen] = useState(false);
 
@@ -70,7 +70,6 @@ export default function DeleteAccountDialog() {
           <div className="grid gap-2">
             <FormInput name="password" type="password" disabled={isPending} />
           </div>
-
           <DialogFooter className="gap-2">
             <DialogClose asChild>
               <Button variant="secondary" onClick={() => setOpen(false)}>
@@ -86,4 +85,4 @@ export default function DeleteAccountDialog() {
       </DialogContent>
     </Dialog>
   );
-}
+};

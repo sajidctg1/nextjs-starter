@@ -4,13 +4,13 @@ import { useQueryState } from "nuqs";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-import AppearanceSettings from "./appearance-settings";
-import NotificationSettings from "./notification-settings";
-import ProfileSettings from "./profile-settings";
-import SecuritySettings from "./security-settings";
+import { AccountSettings } from "./account";
+import { AppearanceSettings } from "./appearance-settings";
+import { NotificationSettings } from "./notification-settings";
+import { SecuritySettings } from "./security";
 
 const tabs = {
-  Profile: "Profile",
+  Account: "Account",
   Security: "Security",
   Appearance: "Appearance",
   Notifications: "Notifications",
@@ -18,7 +18,7 @@ const tabs = {
 
 export default function SettingTabs() {
   const [activeTab, setActiveTab] = useQueryState("active-tab", {
-    defaultValue: tabs.Profile,
+    defaultValue: tabs.Account,
   });
 
   return (
@@ -30,8 +30,8 @@ export default function SettingTabs() {
           </TabsTrigger>
         ))}
       </TabsList>
-      <TabsContent value={tabs.Profile}>
-        <ProfileSettings />
+      <TabsContent value={tabs.Account}>
+        <AccountSettings />
       </TabsContent>
       <TabsContent value={tabs.Security}>
         <SecuritySettings />
