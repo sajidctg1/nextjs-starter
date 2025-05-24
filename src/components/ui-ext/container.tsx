@@ -3,18 +3,18 @@ import * as React from "react";
 
 import { cn } from "~/lib/utils";
 
-const containerVariants = cva("mx-auto py-4 lg:py-6 lg:px-6", {
+const containerVariants = cva("max-w-8xl mx-auto py-4 lg:py-6 lg:px-6", {
   variants: {
     variant: {
       narrowConstrainedPadded: "max-w-4xl px-4",
-      constrainedPadded: "max-w-8xl px-4",
-      fullMobileConstrainedPadded: "max-w-8xl",
+      constrainedPadded: "px-4",
+      fullMobileConstrainedPadded: "",
       breakpointPadded: "container px-4",
       fullMobileBreakpointPadded: "container",
     },
   },
   defaultVariants: {
-    variant: "breakpointPadded",
+    variant: "constrainedPadded",
   },
 });
 
