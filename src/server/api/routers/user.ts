@@ -9,6 +9,7 @@ import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { auth } from "~/server/lib/auth";
 import {
   getUserRoleCounts,
+  updateUser,
   userPaginate,
 } from "~/server/repositories/user-repository";
 
@@ -57,5 +58,9 @@ export const userRouter = createTRPCRouter({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
     });
     return data ?? null;
+  }),
+
+  removeImage: protectedProcedure.mutation(async ({ ctx }) => {
+    await updateUser(ctx.user.id, { image: null });
   }),
 });
