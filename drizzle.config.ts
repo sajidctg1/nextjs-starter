@@ -3,7 +3,7 @@ import { type Config } from "drizzle-kit";
 import { env } from "~/env";
 
 export default {
-  schema: "./src/server/db/schemas.ts",
+  schema: "./src/server/db/schemas/index.ts",
   out: "migrations",
   dialect: "sqlite",
   dbCredentials: {
