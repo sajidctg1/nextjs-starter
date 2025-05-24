@@ -87,8 +87,7 @@ export default function SecuritySettings() {
         <CardHeader>
           <CardTitle>Sessions</CardTitle>
           <CardDescription>
-            {" "}
-            Manage your active sessions across devices{" "}
+            Manage your active sessions across devices
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -98,7 +97,7 @@ export default function SecuritySettings() {
             </div>
           ) : (
             sessions?.map((session) => {
-              const ua = new UAParser(session.userAgent || "");
+              const ua = new UAParser(session.userAgent ?? "");
               return (
                 <div key={session.id}>
                   <div className="flex gap-4">
@@ -108,21 +107,18 @@ export default function SecuritySettings() {
                       <LaptopIcon className="size-10" />
                     )}
                     <div className="text-muted-foreground space-y-1 text-sm">
-                      <p className="flex gap-2 text-base font-semibold">
+                      <p className="text-foreground flex gap-2 text-base font-semibold">
                         {ua.getOS().name} ({ua.getCPU().toString()})
                         {session.id === currentSession?.session.id && (
                           <Badge>This Device</Badge>
                         )}
                       </p>
                       <p>
-                        {" "}
-                        {ua?.getBrowser().name} •{" "}
-                        {ua?.getBrowser().version}{" "}
+                        {ua?.getBrowser().name} • {ua?.getBrowser().version}
                       </p>
                       <p className="text-xs">
-                        IP: {!session.ipAddress ? "Unknown" : session.ipAddress}{" "}
-                        • {session.createdAt.toDateString()}{" "}
-                        {session.createdAt.toLocaleTimeString()}
+                        IP:
+                        {`${session.ipAddress ?? "Unknown"} ${session.createdAt.toDateString()} ${session.createdAt.toLocaleTimeString()}`}
                       </p>
                     </div>
                     {session.id !== currentSession?.session.id && (
@@ -148,7 +144,7 @@ export default function SecuritySettings() {
               Last checked: {new Date().toDateString()}
             </p>
             <ButtonLoading
-              loading={false}
+              loading={isTerminatingAll}
               variant="destructive"
               size="sm"
               disabled={sessions?.length === 0}
