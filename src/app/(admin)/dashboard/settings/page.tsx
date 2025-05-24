@@ -7,7 +7,7 @@ export const metadata = {
 
 export default async function SettingsPage() {
   return (
-    <Container>
+    <Container className="max-w-6xl">
       <SettingTabs />
     </Container>
   );
