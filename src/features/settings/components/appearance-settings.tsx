@@ -5,7 +5,6 @@ import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-import { FormSelect } from "~/components/form/form-select";
 import { GenericForm } from "~/components/form/generic-form";
 import { Button } from "~/components/ui/button";
 import {
@@ -24,6 +23,14 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { Separator } from "~/components/ui/separator";
 import { useFont } from "~/hooks/use-font";
 import { cn } from "~/lib/utils";
@@ -46,21 +53,16 @@ export default function AppearanceSettings() {
 
   const form = useForm<UpdateAppearancePayload>({
     resolver: zodResolver(updateAppearanceSchema),
-    defaultValues: { theme: "", font: "" },
+    defaultValues: { theme, font },
   });
 
   function onSubmit(data: UpdateAppearancePayload) {
-    if (theme !== data.theme) {
-      setTheme(data.theme);
-    }
+    if (theme !== data.theme) setTheme(data.theme);
     setFont(data.font);
   }
 
-  form.watch();
-
   useEffect(() => {
     if (!theme || !font) return;
-
     form.setValue("theme", theme);
     form.setValue("font", font);
   }, [theme, font]);
@@ -77,13 +79,31 @@ export default function AppearanceSettings() {
       </CardHeader>
       <CardContent>
         <GenericForm {...form} onSubmit={onSubmit}>
-          <FormSelect
-            disabled={false}
+          <FormField
+            control={form.control}
             name="font"
-            options={fontList.map((i) => ({
-              label: i.name,
-              value: i.className,
-            }))}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Font</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={font}>
+                  <FormControl>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select font" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectGroup>
+                      {fontList.map((item) => (
+                        <SelectItem key={item.className} value={item.className}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
           />
           <FormField
             control={form.control}
@@ -97,7 +117,7 @@ export default function AppearanceSettings() {
                 <FormMessage />
                 <RadioGroup
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  defaultValue={theme}
                   className="grid max-w-md grid-cols-2 gap-8 pt-2"
                 >
                   <FormItem>
@@ -109,7 +129,7 @@ export default function AppearanceSettings() {
                         className={cn(
                           "cursor-pointer rounded-md border-2 p-1 hover:bg-gray-300",
                           form.getValues("theme") === "light" &&
-                            "border-primary"
+                          "border-primary"
                         )}
                       >
                         <div className="space-y-2 rounded-sm bg-gray-300 p-2">
@@ -167,7 +187,7 @@ export default function AppearanceSettings() {
               </FormItem>
             )}
           />
-          <Button>Update preferences</Button>
+          <Button disabled={!form.formState.isDirty} type="submit">Update preferences</Button>
         </GenericForm>
       </CardContent>
     </Card>
