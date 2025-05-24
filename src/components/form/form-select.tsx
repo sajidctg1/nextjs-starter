@@ -38,7 +38,8 @@ export const FormSelect = <T extends Record<string, any>>({
   disabled,
 }: Props<T>) => {
   const { control } = useFormContext();
-  const placeholder = _placeholder ?? "Select " + label;
+  const placeholder =
+    (_placeholder ?? label) ? "Select " + label : "Select " + name.toString();
 
   return (
     <FormField
@@ -46,7 +47,9 @@ export const FormSelect = <T extends Record<string, any>>({
       name={name.toString()}
       render={({ field }) => (
         <FormItem className={className}>
-          <FormLabel className="capitalize">{label}</FormLabel>
+          <FormLabel className="capitalize">
+            {label ?? name.toString()}
+          </FormLabel>
           <Select
             disabled={disabled}
             onValueChange={field.onChange}
