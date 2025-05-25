@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  BadgeCheckIcon,
-  BellIcon,
-  CircleUserIcon,
-  CogIcon,
-  LogOutIcon,
-} from "lucide-react";
+import { BadgeCheckIcon, BellIcon, CogIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -20,9 +13,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { AVATAR_PLACEHOLDER } from "~/constants";
 import { AUTH_URI } from "~/features/auth/constants";
 import { authClient } from "~/lib/auth-client";
+
+import { UserAvatar } from "./user-avatar";
 
 export const UserMenu = () => {
   const router = useRouter();
@@ -54,25 +48,14 @@ export const UserMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="secondary" size="icon" className="rounded-full">
-          <Avatar className="size-9">
-            <AvatarImage src={user.image ?? AVATAR_PLACEHOLDER} />
-            <AvatarFallback className="">
-              <CircleUserIcon />
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar src={user.image} alt={user.name} className="size-9" />
           <span className="sr-only">Toggle user menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-56" align="end">
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <Avatar className="size-8 rounded-lg">
-              <AvatarImage
-                src={user.image ?? AVATAR_PLACEHOLDER}
-                alt={user.name}
-              />
-              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-            </Avatar>
+            <UserAvatar src={user.image} alt={user.name} />
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">{user.name}</span>
               <span className="truncate text-xs">{user.email}</span>
