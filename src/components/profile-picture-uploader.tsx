@@ -28,8 +28,6 @@ export const ProfilePictureUploader = ({ maxSize, onUpload }: Props) => {
 
   const handleUpload = React.useCallback(
     async (files: File[], { onProgress }: OnProgress) => {
-      if (files[0]) onProgress(files[0], 50);
-
       setIsUploading(true);
       try {
         const res = await uploadFiles("avatarUploader", {
