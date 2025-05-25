@@ -7,13 +7,13 @@ import { useForm } from "react-hook-form";
 
 import { FormInput } from "~/components/form/form-input";
 import { GenericForm } from "~/components/form/generic-form";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
+import { ProfilePictureUploader } from "~/components/profile-picture-uploader";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
+import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 import { api } from "~/trpc/react";
 
-import { ProfilePictureUploader } from "~/components/profile-picture-uploader";
 import { useUpdateProfile } from "../../api/update-profile";
 import { type UpdateProfilePayload, updateProfileSchema } from "../../schemas";
 
@@ -31,11 +31,12 @@ export const AccountDetailsForm = () => {
   });
 
   const handleRemoveAvatar = () => {
-    removeImage(undefined, {
-      onSuccess() {
-        form.setValue("image", null);
-      },
-    });
+    updateProfile(
+      { image: null },
+      {
+        onSuccess: () => form.setValue("image", null),
+      }
+    );
   };
 
   const handleSubmit = (data: UpdateProfilePayload) => {
@@ -67,6 +68,7 @@ export const AccountDetailsForm = () => {
               variant={"destructive"}
               size={"icon"}
               className="size-8"
+              disabled={isUpdating}
               onClick={handleRemoveAvatar}
             >
               <XIcon />

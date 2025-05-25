@@ -14,7 +14,7 @@ import {
   FileUploadItemMetadata,
   FileUploadItemPreview,
   FileUploadItemProgress,
-  FileUploadList
+  FileUploadList,
 } from "~/components/ui/file-upload";
 import { uploadFiles } from "~/lib/uploadthing/utils";
 import { cn } from "~/lib/utils";
@@ -90,7 +90,8 @@ export const ProfilePictureUploader = ({
           </div>
           <p className="text-sm font-medium">Drag & drop images here</p>
           <p className="text-muted-foreground text-sm">
-            Or click to browse <br />(up to {maxSize}MB)
+            Or click to browse <br />
+            (up to {maxSize}MB)
           </p>
         </div>
       </FileUploadDropzone>
