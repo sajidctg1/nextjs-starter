@@ -78,7 +78,6 @@ export const AccountDetailsForm = () => {
           <ProfilePictureUploader
             maxSize={1} // 1MB
             onUpload={(files) => form.setValue("image", files[0] ?? null)}
-            className="size-[200px] rounded-full"
           />
         )}
       </div>
