@@ -1,42 +1,35 @@
 "use client";
 
-import { UploadIcon, XIcon } from "lucide-react";
+import { UploadIcon } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
 import { UploadThingError } from "uploadthing/server";
 
-import { Button } from "~/components/ui/button";
 import {
   FileUpload,
   FileUploadDropzone,
   FileUploadItem,
-  FileUploadItemDelete,
   FileUploadItemMetadata,
   FileUploadItemPreview,
   FileUploadItemProgress,
-  FileUploadList,
 } from "~/components/ui/file-upload";
 import { uploadFiles } from "~/lib/uploadthing/utils";
-import { cn } from "~/lib/utils";
 
 interface Props {
   maxSize: number;
   onUpload?(fileUrls: string[]): void;
-  className?: string;
 }
 
 type OnProgress = { onProgress: (file: File, progress: number) => void };
 
-export const ProfilePictureUploader = ({
-  maxSize,
-  onUpload,
-  className,
-}: Props) => {
+export const ProfilePictureUploader = ({ maxSize, onUpload }: Props) => {
   const [isUploading, setIsUploading] = React.useState(false);
-  const [files, setFiles] = React.useState<File[]>([]);
+  const [file, setFile] = React.useState<File>();
 
   const handleUpload = React.useCallback(
     async (files: File[], { onProgress }: OnProgress) => {
+      if (files[0]) onProgress(files[0], 50);
+
       setIsUploading(true);
       try {
         const res = await uploadFiles("avatarUploader", {
@@ -77,40 +70,36 @@ export const ProfilePictureUploader = ({
       accept="image/*"
       maxFiles={1}
       maxSize={maxSize * 1024 * 1024}
-      className={cn("w-full max-w-md", className)}
-      onAccept={(files) => setFiles(files)}
+      className={"w-full max-w-md border-none"}
+      onAccept={(files) => setFile(files[0])}
       onUpload={handleUpload}
       onFileReject={onFileReject}
       disabled={isUploading}
     >
-      <FileUploadDropzone className="h-full rounded-full">
-        <div className="flex flex-col items-center gap-1 text-center">
-          <div className="flex items-center justify-center rounded-full border p-2.5">
-            <UploadIcon className="text-muted-foreground size-6" />
+      {file ? (
+        <FileUploadItem value={file} className="border-none p-0">
+          <div className="relative size-[200px] shrink-0 grow overflow-hidden rounded-full">
+            <FileUploadItemPreview className="size-[200px]" />
+            <FileUploadItemProgress variant="fill" />
           </div>
-          <p className="text-sm font-medium">Drag & drop images here</p>
-          <p className="text-muted-foreground text-sm">
-            Or click to browse <br />
-            (up to {maxSize}MB)
-          </p>
-        </div>
-      </FileUploadDropzone>
-      <FileUploadList>
-        {files.map((file, index) => (
-          <FileUploadItem key={index} value={file}>
-            <div className="flex w-full items-center gap-2">
-              <FileUploadItemPreview />
-              <FileUploadItemMetadata />
-              <FileUploadItemDelete asChild>
-                <Button variant="ghost" size="icon" className="size-7">
-                  <XIcon />
-                </Button>
-              </FileUploadItemDelete>
+          <div className="flex w-full flex-col items-center gap-2">
+            <FileUploadItemMetadata />
+          </div>
+        </FileUploadItem>
+      ) : (
+        <FileUploadDropzone className="size-[200px] rounded-full">
+          <div className="flex flex-col items-center gap-1 text-center">
+            <div className="flex items-center justify-center rounded-full border p-2.5">
+              <UploadIcon className="text-muted-foreground size-6" />
             </div>
-            <FileUploadItemProgress />
-          </FileUploadItem>
-        ))}
-      </FileUploadList>
+            <p className="text-sm font-medium">Drag & drop images here</p>
+            <p className="text-muted-foreground text-sm">
+              Or click to browse <br />
+              (up to {maxSize}MB)
+            </p>
+          </div>
+        </FileUploadDropzone>
+      )}
     </FileUpload>
   );
 };
