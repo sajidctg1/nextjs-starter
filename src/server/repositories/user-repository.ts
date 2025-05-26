@@ -8,12 +8,12 @@ import { unstable_cache } from "~/server/lib/unstable-cache";
 
 const REVALIDATION_INTERVAL = 20; // seconds
 
-export const insertUser = async (data: typeof table.users.$inferInsert) => {
-  return db.insert(table.users).values(data);
+export const insertUser = async (data: typeof table.user.$inferInsert) => {
+  return db.insert(table.user).values(data);
 };
 
 export const findAnyUser = async () => {
-  return db.query.users.findFirst();
+  return db.query.user.findFirst();
 };
 
 export const updateUser = async (
@@ -23,12 +23,12 @@ export const updateUser = async (
   >
 ) => {
   return db
-    .update(table.users)
+    .update(table.user)
     .set({
       ...data,
       role: data.role ?? "user",
     })
-    .where(eq(table.users.id, id));
+    .where(eq(table.user.id, id));
 };
 
 export async function userPaginate(input: UserSearchParams) {
@@ -38,26 +38,26 @@ export async function userPaginate(input: UserSearchParams) {
     !input.status.includes("active");
 
   const where = and(
-    input.name ? ilike(table.users.name, `%${input.name}%`) : undefined,
+    input.name ? ilike(table.user.name, `%${input.name}%`) : undefined,
     input.role && input.role.length > 0
-      ? inArray(table.users.role, input.role)
+      ? inArray(table.user.role, input.role)
       : undefined,
-    banned ? eq(table.users.banned, true) : undefined,
+    banned ? eq(table.user.banned, true) : undefined,
     input.createdAt
-      ? dateFilterSql(table.users.createdAt, input.createdAt)
+      ? dateFilterSql(table.user.createdAt, input.createdAt)
       : undefined
   );
 
   const orderBy =
     input.sort && input.sort.length > 0
       ? input.sort.map((item) =>
-          item.desc ? desc(table.users[item.id]) : asc(table.users[item.id])
-        )
-      : [asc(table.users.createdAt)];
+        item.desc ? desc(table.user[item.id]) : asc(table.user[item.id])
+      )
+      : [asc(table.user.createdAt)];
 
   const [data, total] = await db.transaction((tx) =>
     Promise.all([
-      tx.query.users.findMany({
+      tx.query.user.findMany({
         where,
         limit: input.perPage && input.perPage > 0 ? input.perPage : undefined,
         offset:
@@ -70,7 +70,7 @@ export async function userPaginate(input: UserSearchParams) {
         .select({
           count: count(),
         })
-        .from(table.users)
+        .from(table.user)
         .where(where)
         .execute()
         .then((res) => res[0]?.count ?? 0),
@@ -88,11 +88,11 @@ export async function getUserRoleCounts() {
       try {
         return await db
           .select({
-            role: table.users.role,
+            role: table.user.role,
             count: count(),
           })
-          .from(table.users)
-          .groupBy(table.users.role)
+          .from(table.user)
+          .groupBy(table.user.role)
           .having(gt(count(), 0))
           .then((res) =>
             res.reduce(

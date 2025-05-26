@@ -19,7 +19,7 @@ export const roles = pgTable("role", {
   ...timestamps,
 });
 
-export const users = pgTable("user", {
+export const user = pgTable("user", {
   id: rowId(),
   name: text("name").notNull(),
   email: text("email").unique().notNull(),
@@ -32,11 +32,11 @@ export const users = pgTable("user", {
   ...timestamps,
 });
 
-export const accounts = pgTable("account", {
+export const account = pgTable("account", {
   id: rowId(),
   userId: uuid("userId")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
   accountId: text("accountId").notNull(),
   providerId: text("providerId").notNull(),
   accessToken: text("accessToken"),
@@ -53,7 +53,7 @@ export const accounts = pgTable("account", {
   ...timestamps,
 });
 
-export const verifications = pgTable("verification", {
+export const verification = pgTable("verification", {
   id: rowId(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
@@ -61,10 +61,10 @@ export const verifications = pgTable("verification", {
   ...timestamps,
 });
 
-export const sessions = pgTable("session", {
+export const session = pgTable("session", {
   id: rowId(),
   userId: uuid("userId")
-    .references(() => users.id, { onDelete: "cascade" })
+    .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
   token: text("token").notNull(),
   expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),

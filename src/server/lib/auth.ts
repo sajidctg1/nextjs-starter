@@ -14,7 +14,7 @@ import { db } from "../db/drizzle";
 import { sendEmail } from "./email-sender";
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, { provider: "pg", usePlural: true }),
+  database: drizzleAdapter(db, { provider: "pg", usePlural: false }),
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path.startsWith(AUTH_URI.signUp)) {
@@ -24,6 +24,7 @@ export const auth = betterAuth({
   },
   advanced: {
     useSecureCookies: env.NODE_ENV === "production",
+    generateId: () => crypto.randomUUID(),
   },
   emailAndPassword: {
     enabled: authConfig.email.enabled,
