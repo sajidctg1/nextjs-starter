@@ -1,15 +1,15 @@
-import { integer, text } from "drizzle-orm/sqlite-core";
+import { timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const timestamps = {
-  createdAt: integer("createdAt", { mode: "timestamp" })
+  createdAt: timestamp("createdAt", { withTimezone: true })
     .notNull()
-    .default(new Date()),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .defaultNow(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true })
     .notNull()
-    .default(new Date()),
+    .defaultNow(),
 };
 
 export const rowId = () =>
-  text("id")
+  uuid("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID());

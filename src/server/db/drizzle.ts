@@ -1,7 +1,7 @@
-import { type Client, createClient } from "@libsql/client";
 import { and, gte, lte } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/libsql";
-import type { SQLiteColumn } from "drizzle-orm/sqlite-core";
+import { drizzle } from "drizzle-orm/node-postgres";
+import type { PgColumn } from "drizzle-orm/pg-core";
+import { Pool } from "pg";
 
 import { env } from "~/env";
 
@@ -12,17 +12,17 @@ import * as schema from "./schemas";
  * update.
  */
 const globalForDb = globalThis as unknown as {
-  client: Client | undefined;
+  client: Pool | undefined;
 };
 
 export const client =
-  globalForDb.client ?? createClient({ url: env.DATABASE_URL });
+  globalForDb.client ?? new Pool({ connectionString: env.DATABASE_URL });
 if (env.NODE_ENV !== "production") globalForDb.client = client;
 
-export const db = drizzle(client, { schema });
+export const db = drizzle({ client, schema });
 export const table = schema;
 
-export function dateFilterSql(column: SQLiteColumn, input: number[]) {
+export function dateFilterSql(column: PgColumn, input: number[]) {
   return input.length > 0
     ? and(
         input[0]

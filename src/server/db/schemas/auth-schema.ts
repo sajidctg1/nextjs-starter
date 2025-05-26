@@ -1,4 +1,11 @@
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import {
+  boolean,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 
 import { ROLES } from "~/constants";
 
@@ -6,37 +13,39 @@ import { rowId, timestamps } from "./index";
 
 type RoleName = (typeof ROLES)[number];
 
-export const roles = sqliteTable("role", {
+export const roles = pgTable("role", {
   name: text("name", { enum: ROLES }).unique().$type<RoleName>().notNull(),
-  permissions: text("permissions", { mode: "json" }).$type<any>(),
+  permissions: jsonb("permissions").$type<any>(),
   ...timestamps,
 });
 
-export const users = sqliteTable("user", {
+export const users = pgTable("user", {
   id: rowId(),
   name: text("name").notNull(),
   email: text("email").unique().notNull(),
-  emailVerified: integer("emailVerified", { mode: "boolean" }).notNull(),
+  emailVerified: boolean("emailVerified").notNull(),
   image: text("image"),
   role: text("role", { enum: ROLES }).$type<RoleName>().notNull(),
-  banned: integer("banned", { mode: "boolean" }),
+  banned: boolean("banned"),
   banReason: text("banReason"),
-  banExpires: integer("banExpires", { mode: "timestamp" }),
+  banExpires: timestamp("banExpires", { withTimezone: true }),
   ...timestamps,
 });
 
-export const accounts = sqliteTable("account", {
+export const accounts = pgTable("account", {
   id: rowId(),
-  userId: text("userId")
+  userId: uuid("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   accountId: text("accountId").notNull(),
   providerId: text("providerId").notNull(),
   accessToken: text("accessToken"),
   refreshToken: text("refreshToken"),
-  accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
-  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
-    mode: "timestamp",
+  accessTokenExpiresAt: timestamp("accessTokenExpiresAt", {
+    withTimezone: true,
+  }),
+  refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt", {
+    withTimezone: true,
   }),
   scope: text("scope"),
   idToken: text("idToken"),
@@ -44,21 +53,21 @@ export const accounts = sqliteTable("account", {
   ...timestamps,
 });
 
-export const verifications = sqliteTable("verification", {
+export const verifications = pgTable("verification", {
   id: rowId(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
   ...timestamps,
 });
 
-export const sessions = sqliteTable("session", {
+export const sessions = pgTable("session", {
   id: rowId(),
-  userId: text("userId")
+  userId: uuid("userId")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
   token: text("token").notNull(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
   ipAddress: text("ipAddress"),
   userAgent: text("userAgent"),
   ...timestamps,

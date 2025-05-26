@@ -15,6 +15,9 @@ export const env = createEnv({
       .default("development"),
     // db
     DATABASE_URL: z.string().url(),
+    POSTGRES_USER: z.string(),
+    POSTGRES_DB: z.string(),
+    POSTGRES_PASSWORD: z.string(),
     // auth
     EMAIL_CONFIRMATION_EXPIRES: z.coerce.number(),
     GOOGLE_CLIENT_ID: z.string(),
@@ -50,6 +53,9 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     EMAIL_CONFIRMATION_EXPIRES: process.env.EMAIL_CONFIRMATION_EXPIRES,
     DATABASE_URL: process.env.DATABASE_URL,
+    POSTGRES_USER: process.env.POSTGRES_USER,
+    POSTGRES_DB: process.env.POSTGRES_DB,
+    POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     SUPPORT_MAIL_ADDRESS: process.env.SUPPORT_MAIL_ADDRESS,

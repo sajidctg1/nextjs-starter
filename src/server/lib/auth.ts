@@ -14,7 +14,7 @@ import { db } from "../db/drizzle";
 import { sendEmail } from "./email-sender";
 
 export const auth = betterAuth({
-  database: drizzleAdapter(db, { provider: "sqlite", usePlural: true }),
+  database: drizzleAdapter(db, { provider: "pg", usePlural: true }),
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
       if (ctx.path.startsWith(AUTH_URI.signUp)) {

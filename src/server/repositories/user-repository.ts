@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, asc, count, desc, eq, gt, inArray, like } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, ilike, inArray } from "drizzle-orm";
 
 import { type UserSearchParams } from "~/features/users/schemas";
 import { dateFilterSql, db, table } from "~/server/db/drizzle";
@@ -38,7 +38,7 @@ export async function userPaginate(input: UserSearchParams) {
     !input.status.includes("active");
 
   const where = and(
-    input.name ? like(table.users.name, `%${input.name}%`) : undefined,
+    input.name ? ilike(table.users.name, `%${input.name}%`) : undefined,
     input.role && input.role.length > 0
       ? inArray(table.users.role, input.role)
       : undefined,
