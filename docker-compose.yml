@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:alpine
+    restart: always
+    container_name: nextjs-starter-db
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - nextjs-starter
+
+volumes:
+  db-data:
+
+networks:
+  nextjs-starter:
