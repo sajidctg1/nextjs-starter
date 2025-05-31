@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import { AUTH_URI, DEFAULT_LOGIN_REDIRECT } from "./features/auth/constants";
 
 const authRoutes: string[] = Object.values(AUTH_URI);
-const publicRoutes = ["/", "/onboarding"];
+const publicRoutes = ["/"];
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;

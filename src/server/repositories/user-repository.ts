@@ -12,10 +12,6 @@ export const insertUser = async (data: typeof table.user.$inferInsert) => {
   return db.insert(table.user).values(data);
 };
 
-export const findAnyUser = async () => {
-  return db.query.user.findFirst();
-};
-
 export const updateUser = async (
   id: AuthUser["id"],
   data: Partial<
