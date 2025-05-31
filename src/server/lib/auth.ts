@@ -17,8 +17,24 @@ export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", usePlural: false }),
   hooks: {
     after: createAuthMiddleware(async (ctx) => {
+      if (ctx.context.returned instanceof Error) return;
+
+      if (ctx.path.includes(AUTH_URI.verifyEmail)) {
+        ctx.setCookie(UNVERIFIED_EMAIL_COOKIE, "", {
+          httpOnly: true,
+          maxAge: 0,
+          secure: env.NODE_ENV === "production",
+          path: "/",
+        });
+      }
+
       if (ctx.path.startsWith(AUTH_URI.signUp)) {
-        ctx.setCookie(UNVERIFIED_EMAIL_COOKIE, ctx.body.email);
+        ctx.setCookie(UNVERIFIED_EMAIL_COOKIE, ctx.body.email, {
+          httpOnly: true,
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+          secure: env.NODE_ENV === "production",
+          path: "/",
+        });
       }
     }),
   },

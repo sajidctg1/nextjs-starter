@@ -6,7 +6,7 @@ export const authConfig = {
   enableSignup: true,
   email: {
     enabled: true,
-    requiredVerification: env.NODE_ENV === "production",
+    requiredVerification: true,
     confirmationExpires: env.EMAIL_CONFIRMATION_EXPIRES * 1000,
   },
   magicLink: {
