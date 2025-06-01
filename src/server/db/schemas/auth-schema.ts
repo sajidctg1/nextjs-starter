@@ -1,31 +1,23 @@
 import {
   boolean,
-  jsonb,
   pgTable,
   text,
   timestamp,
   uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
 
 import { ROLES } from "~/constants";
 
 import { rowId, timestamps } from "./index";
 
-type RoleName = (typeof ROLES)[number];
-
-export const roles = pgTable("role", {
-  name: text("name", { enum: ROLES }).unique().$type<RoleName>().notNull(),
-  permissions: jsonb("permissions").$type<any>(),
-  ...timestamps,
-});
-
 export const user = pgTable("user", {
   id: rowId(),
-  name: text("name").notNull(),
-  email: text("email").unique().notNull(),
+  name: varchar("name").notNull(),
+  email: varchar("email").unique().notNull(),
   emailVerified: boolean("emailVerified").notNull(),
-  image: text("image"),
-  role: text("role", { enum: ROLES }).$type<RoleName>().notNull(),
+  image: varchar("image"),
+  role: varchar("role", { enum: ROLES }).notNull(),
   banned: boolean("banned"),
   banReason: text("banReason"),
   banExpires: timestamp("banExpires", { withTimezone: true }),
@@ -37,26 +29,26 @@ export const account = pgTable("account", {
   userId: uuid("userId")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
-  accountId: text("accountId").notNull(),
-  providerId: text("providerId").notNull(),
-  accessToken: text("accessToken"),
-  refreshToken: text("refreshToken"),
+  accountId: varchar("accountId").notNull(),
+  providerId: varchar("providerId").notNull(),
+  accessToken: varchar("accessToken"),
+  refreshToken: varchar("refreshToken"),
   accessTokenExpiresAt: timestamp("accessTokenExpiresAt", {
     withTimezone: true,
   }),
   refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt", {
     withTimezone: true,
   }),
-  scope: text("scope"),
-  idToken: text("idToken"),
-  password: text("password"),
+  scope: varchar("scope"),
+  idToken: varchar("idToken"),
+  password: varchar("password"),
   ...timestamps,
 });
 
 export const verification = pgTable("verification", {
   id: rowId(),
-  identifier: text("identifier").notNull(),
-  value: text("value").notNull(),
+  identifier: varchar("identifier").notNull(),
+  value: varchar("value").notNull(),
   expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
   ...timestamps,
 });
@@ -66,9 +58,9 @@ export const session = pgTable("session", {
   userId: uuid("userId")
     .references(() => user.id, { onDelete: "cascade" })
     .notNull(),
-  token: text("token").notNull(),
+  token: varchar("token").notNull(),
   expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
-  ipAddress: text("ipAddress"),
+  ipAddress: varchar("ipAddress"),
   userAgent: text("userAgent"),
   ...timestamps,
 });

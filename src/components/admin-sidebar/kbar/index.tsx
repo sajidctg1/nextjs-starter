@@ -17,10 +17,6 @@ import useThemeSwitching from "./use-theme-switching";
 export function KBar({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
-  const navigateTo = (url: string) => {
-    router.push(url);
-  };
-
   // These action are for the navigation
   const actions = useMemo(
     () =>
@@ -35,7 +31,7 @@ export function KBar({ children }: { children: React.ReactNode }) {
                 keywords: navItem.title.toLowerCase(),
                 section: "Navigation",
                 subtitle: `Go to ${navItem.title}`,
-                perform: () => navigateTo(navItem.href ?? "#"),
+                perform: () => router.push(navItem.href ?? "#"),
               }
             : null;
 
@@ -48,13 +44,13 @@ export function KBar({ children }: { children: React.ReactNode }) {
         //     keywords: childItem.title.toLowerCase(),
         //     section: navItem.title,
         //     subtitle: `Go to ${childItem.title}`,
-        //     perform: () => navigateTo(childItem.url),
+        //     perform: () => router.push(childItem.url),
         //   })) ?? [];
 
         // Return only valid actions (ignoring null base actions for containers)
         return baseAction ? [baseAction] : [];
       }),
-    []
+    [router]
   );
 
   return (

@@ -6,13 +6,13 @@ import { type ValidationError } from "~/lib/exceptions";
 
 export function handleActionError(
   err: SafeActionResult<any, any, any>,
-  form: UseFormReturn<any>
+  form: UseFormReturn<Record<string, unknown>>
 ) {
   if (err.validationErrors) {
     if (err.validationErrors.fieldErrors) {
       Object.keys(err.validationErrors.fieldErrors ?? {}).forEach((key) => {
-        form.setError(key as any, {
-          message: (err.validationErrors.fieldErrors as any)[key][0],
+        form.setError(key, {
+          message: err.validationErrors.fieldErrors[key][0],
         });
       });
     }
@@ -22,8 +22,8 @@ export function handleActionError(
 
       if (e.fieldErrors) {
         Object.keys(e.fieldErrors || {}).forEach((key) => {
-          form.setError(key as any, {
-            message: (e.fieldErrors as any)[key][0],
+          form.setError(key, {
+            message: e.fieldErrors[key]?.[0],
           });
         });
       }

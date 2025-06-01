@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 import { Button } from "~/components/ui/button";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import {
   Form,
   FormControl,
@@ -13,13 +14,12 @@ import {
   FormItem,
   FormMessage,
 } from "~/components/ui/form";
+import { Heading } from "~/components/ui/heading";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "~/components/ui/input-otp";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
-import { Heading } from "~/components/ui-ext/heading";
 
 import { useVerifyEmail } from "../api/verify-email";
 import { AUTH_URI } from "../constants";

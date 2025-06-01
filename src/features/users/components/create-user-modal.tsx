@@ -9,7 +9,7 @@ import { FormInput } from "~/components/form/form-input";
 import { FormSelect } from "~/components/form/form-select";
 import { GenericForm } from "~/components/form/generic-form";
 import { Button } from "~/components/ui/button";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import {
   Modal,
   ModalClose,
@@ -19,7 +19,7 @@ import {
   ModalHeader,
   ModalTitle,
   ModalTrigger,
-} from "~/components/ui-ext/modal";
+} from "~/components/ui/modal";
 import { api } from "~/trpc/react";
 
 import { type CreateUserPayload, createUserSchema } from "../schemas";

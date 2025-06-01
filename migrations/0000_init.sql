@@ -1,33 +1,25 @@
 CREATE TABLE "account" (
 	"id" uuid PRIMARY KEY NOT NULL,
 	"userId" uuid NOT NULL,
-	"accountId" text NOT NULL,
-	"providerId" text NOT NULL,
-	"accessToken" text,
-	"refreshToken" text,
+	"accountId" varchar NOT NULL,
+	"providerId" varchar NOT NULL,
+	"accessToken" varchar,
+	"refreshToken" varchar,
 	"accessTokenExpiresAt" timestamp with time zone,
 	"refreshTokenExpiresAt" timestamp with time zone,
-	"scope" text,
-	"idToken" text,
-	"password" text,
+	"scope" varchar,
+	"idToken" varchar,
+	"password" varchar,
 	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
 	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE "role" (
-	"name" text NOT NULL,
-	"permissions" jsonb,
-	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
-	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "role_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "session" (
 	"id" uuid PRIMARY KEY NOT NULL,
 	"userId" uuid NOT NULL,
-	"token" text NOT NULL,
+	"token" varchar NOT NULL,
 	"expiresAt" timestamp with time zone NOT NULL,
-	"ipAddress" text,
+	"ipAddress" varchar,
 	"userAgent" text,
 	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
 	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL
@@ -35,11 +27,11 @@ CREATE TABLE "session" (
 --> statement-breakpoint
 CREATE TABLE "user" (
 	"id" uuid PRIMARY KEY NOT NULL,
-	"name" text NOT NULL,
-	"email" text NOT NULL,
+	"name" varchar NOT NULL,
+	"email" varchar NOT NULL,
 	"emailVerified" boolean NOT NULL,
-	"image" text,
-	"role" text NOT NULL,
+	"image" varchar,
+	"role" varchar NOT NULL,
 	"banned" boolean,
 	"banReason" text,
 	"banExpires" timestamp with time zone,
@@ -50,8 +42,8 @@ CREATE TABLE "user" (
 --> statement-breakpoint
 CREATE TABLE "verification" (
 	"id" uuid PRIMARY KEY NOT NULL,
-	"identifier" text NOT NULL,
-	"value" text NOT NULL,
+	"identifier" varchar NOT NULL,
+	"value" varchar NOT NULL,
 	"expiresAt" timestamp with time zone NOT NULL,
 	"createdAt" timestamp with time zone DEFAULT now() NOT NULL,
 	"updatedAt" timestamp with time zone DEFAULT now() NOT NULL

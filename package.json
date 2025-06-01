@@ -9,7 +9,7 @@
     "start": "next start",
     "preview": "next build && next start",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
-    "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "lint": "eslint --cache",
     "lint:fix": "eslint --fix --cache",
     "typecheck": "tsc --noEmit",

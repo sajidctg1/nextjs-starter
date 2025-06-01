@@ -4,8 +4,8 @@ import { LaptopIcon, Loader2Icon, LogOutIcon, PhoneIcon } from "lucide-react";
 import { UAParser } from "ua-parser-js";
 
 import { Badge } from "~/components/ui/badge";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import { Separator } from "~/components/ui/separator";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 
 import { useListSessions } from "../../api/list-sessions";

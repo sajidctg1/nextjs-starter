@@ -1,6 +1,6 @@
 import { type SearchParams } from "nuqs";
 
-import { Container } from "~/components/ui-ext/container";
+import { Container } from "~/components/ui/container";
 import { UsersTable } from "~/features/users/components/users-table";
 import { userSearchParamsCache } from "~/features/users/schemas";
 import { getValidFilters } from "~/lib/data-table";

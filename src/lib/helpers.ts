@@ -18,10 +18,10 @@ export function formatDate(
 
 export const removeSlashs = (str: string) => str.replace(/(^\/+)|(\/+$)/g, "");
 
-export function throttle(cb: (...args: any[]) => any, delay = 400) {
+export function throttle(cb: (...args: unknown[]) => unknown, delay = 400) {
   let wait = false;
 
-  return (...args: any[]) => {
+  return (...args: unknown[]) => {
     if (wait) return;
 
     cb(...args);
@@ -32,10 +32,10 @@ export function throttle(cb: (...args: any[]) => any, delay = 400) {
   };
 }
 
-export function debounce(cb: (...args: any[]) => any, delay = 400) {
+export function debounce(cb: (...args: unknown[]) => unknown, delay = 400) {
   let timer: NodeJS.Timeout;
   // Return an anonymous function that takes in any number of arguments
-  return function (...args: any[]) {
+  return function (...args: unknown[]) {
     // Clear the previous timer to prevent the execution of 'mainFunction'
     clearTimeout(timer);
 

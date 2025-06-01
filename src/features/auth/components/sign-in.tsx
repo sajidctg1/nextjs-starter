@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { FormInput } from "~/components/form/form-input";
 import { GenericForm } from "~/components/form/generic-form";
 import { Button } from "~/components/ui/button";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import { siteConfig } from "~/configs/site-config";
 
 import { useSignin } from "../api/sign-in";

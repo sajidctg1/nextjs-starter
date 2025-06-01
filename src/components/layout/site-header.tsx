@@ -1,7 +1,7 @@
 import { siteConfig } from "~/configs/site-config";
 
 import { ThemeSwitcher } from "../theme-switcher";
-import { Container } from "../ui-ext/container";
+import { Container } from "../ui/container";
 import { UserMenu } from "../user-menu";
 import { SiteMobileNav } from "./site-mobile-nav";
 import { SiteNav } from "./site-nav";

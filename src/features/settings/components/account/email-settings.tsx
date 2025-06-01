@@ -1,7 +1,7 @@
 "use client";
 
+import { ButtonLoading } from "~/components/ui/button-loading";
 import { Input } from "~/components/ui/input";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 
 export const EmailSettingsForm = () => {

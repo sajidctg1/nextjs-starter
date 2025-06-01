@@ -9,8 +9,8 @@ import { FormInput } from "~/components/form/form-input";
 import { GenericForm } from "~/components/form/generic-form";
 import { ProfilePictureUploader } from "~/components/profile-picture-uploader";
 import { Button } from "~/components/ui/button";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import { Skeleton } from "~/components/ui/skeleton";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 import { api } from "~/trpc/react";
 

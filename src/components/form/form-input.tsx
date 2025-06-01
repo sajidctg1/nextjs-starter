@@ -16,10 +16,10 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
+import { InputPassword } from "../ui/input-password";
 import { Textarea } from "../ui/textarea";
-import { InputPassword } from "../ui-ext/input-password";
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends Record<string, unknown>> {
   name: keyof T;
   label?: string;
   type?: HTMLInputTypeAttribute | "otp" | "phone" | "textarea";
@@ -29,7 +29,7 @@ interface Props<T extends Record<string, any>> {
   disabled?: boolean;
 }
 
-export const FormInput = <T extends Record<string, any>>({
+export const FormInput = <T extends Record<string, unknown>>({
   name,
   label,
   type = "text",

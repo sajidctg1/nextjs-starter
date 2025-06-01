@@ -1,14 +1,14 @@
-import { DataTable } from "~/components/data-table";
 import { Button } from "~/components/ui/button";
+import { Container } from "~/components/ui/container";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { Container } from "~/components/ui-ext/container";
-import CalendarDateRangePicker from "~/features/analytics/components/calendar-date-range-picker";
-import { Overview } from "~/features/analytics/components/overview";
-import { RecentSales } from "~/features/analytics/components/recent-sales";
-import { StatCards } from "~/features/analytics/components/stat-cards";
-import { TotalVisitorChart } from "~/features/analytics/components/total-visitor";
 
+import CalendarDateRangePicker from "./calendar-date-range-picker";
 import data from "./data.json";
+import { DataTable } from "./data-table";
+import { Overview } from "./overview";
+import { RecentSales } from "./recent-sales";
+import { StatCards } from "./stat-cards";
+import { TotalVisitorChart } from "./total-visitor";
 
 export default function DashboardPage() {
   return (

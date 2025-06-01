@@ -4,10 +4,10 @@ import { ThemeProvider } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { type PropsWithChildren } from "react";
 
+import { AlertDialogProvider } from "~/contexts/alert-context";
 import { TRPCReactProvider } from "~/trpc/react";
 
 import { Toaster } from "./ui/sonner";
-import { AlertDialogProvider } from "./ui-ext/alert";
 
 export const Providers = ({ children }: PropsWithChildren) => {
   return (

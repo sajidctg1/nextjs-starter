@@ -8,6 +8,7 @@ import { z } from "zod";
 import { FormInput } from "~/components/form/form-input";
 import { GenericForm } from "~/components/form/generic-form";
 import { Button } from "~/components/ui/button";
+import { ButtonLoading } from "~/components/ui/button-loading";
 import {
   Dialog,
   DialogClose,
@@ -17,7 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { ButtonLoading } from "~/components/ui-ext/button-loading";
 import { authClient } from "~/lib/auth-client";
 
 import { useDeleteAccount } from "../../api/delete-account";

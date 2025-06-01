@@ -17,7 +17,7 @@ import { uploadFiles } from "~/lib/uploadthing/utils";
 
 interface Props {
   maxSize: number;
-  onUpload?(fileUrls: string[]): void;
+  onUpload?: (fileUrls: string[]) => void;
 }
 
 type OnProgress = { onProgress: (file: File, progress: number) => void };

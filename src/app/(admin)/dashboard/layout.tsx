@@ -1,6 +1,6 @@
+import { AppSidebar } from "~/components/admin-sidebar";
+import { KBar } from "~/components/admin-sidebar/kbar";
 import { AppBreadcrumbs } from "~/components/app-breadcrumb";
-import { KBar } from "~/components/dashboard/kbar";
-import { AppSidebar } from "~/components/dashboard/sidebar/app-sidebar";
 import { ThemeSwitcher } from "~/components/theme-switcher";
 import { Separator } from "~/components/ui/separator";
 import {

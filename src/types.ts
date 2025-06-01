@@ -3,13 +3,11 @@ import type {
   UserWithRole,
 } from "better-auth/plugins";
 
+import type { ROLES } from "./constants";
+import type { table } from "./server/db/drizzle";
+
 declare global {
-  interface Role {
-    name: "admin" | "user";
-    permissions: any;
-    createdAt: Date;
-    updatedAt: Date;
-  }
+  type UserRole = (typeof ROLES)[number];
 
   type Session = Prettify<
     Omit<SessionWithImpersonatedBy, "impersonatedBy"> & {
@@ -19,7 +17,9 @@ declare global {
 
   type AuthUser = Prettify<
     Omit<UserWithRole, "role"> & {
-      role?: Role["name"] | null;
+      role?: UserRole | null;
     }
   >;
+
+  type User = typeof table.user.$inferSelect;
 }

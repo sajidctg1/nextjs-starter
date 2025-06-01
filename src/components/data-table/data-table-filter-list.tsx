@@ -24,6 +24,17 @@ import {
   CommandItem,
   CommandList,
 } from "~/components/ui/command";
+import {
+  Faceted,
+  FacetedBadgeList,
+  FacetedContent,
+  FacetedEmpty,
+  FacetedGroup,
+  FacetedInput,
+  FacetedItem,
+  FacetedList,
+  FacetedTrigger,
+} from "~/components/ui/faceted";
 import { Input } from "~/components/ui/input";
 import {
   Popover,
@@ -38,23 +49,12 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import {
-  Faceted,
-  FacetedBadgeList,
-  FacetedContent,
-  FacetedEmpty,
-  FacetedGroup,
-  FacetedInput,
-  FacetedItem,
-  FacetedList,
-  FacetedTrigger,
-} from "~/components/ui-ext/faceted";
-import {
   Sortable,
   SortableContent,
   SortableItem,
   SortableItemHandle,
   SortableOverlay,
-} from "~/components/ui-ext/sortable";
+} from "~/components/ui/sortable";
 import { useDebouncedCallback } from "~/hooks/use-debounced-callback";
 import { getDefaultFilterOperator, getFilterOperators } from "~/lib/data-table";
 import { dataTableConfig } from "~/lib/data-table/config";

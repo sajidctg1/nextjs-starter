@@ -47,8 +47,8 @@ export async function userPaginate(input: UserSearchParams) {
   const orderBy =
     input.sort && input.sort.length > 0
       ? input.sort.map((item) =>
-        item.desc ? desc(table.user[item.id]) : asc(table.user[item.id])
-      )
+          item.desc ? desc(table.user[item.id]) : asc(table.user[item.id])
+        )
       : [asc(table.user.createdAt)];
 
   const [data, total] = await db.transaction((tx) =>

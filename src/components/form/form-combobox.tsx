@@ -27,9 +27,9 @@ import {
 } from "~/components/ui/popover";
 import { cn } from "~/lib/utils";
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends Record<string, unknown>> {
   name: keyof T;
-  options: Array<{ label: string; value: any }>;
+  options: Array<{ label: string; value: string }>;
   label?: string;
   placeholder?: string;
   desc?: string;
@@ -37,7 +37,7 @@ interface Props<T extends Record<string, any>> {
   disabled?: boolean;
 }
 
-export const FormCombobox = <T extends Record<string, any>>({
+export const FormCombobox = <T extends Record<string, unknown>>({
   name,
   options,
   label,

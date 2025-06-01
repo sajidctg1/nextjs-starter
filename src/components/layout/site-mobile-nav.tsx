@@ -25,7 +25,7 @@ import { useMediaQuery } from "~/hooks/use-media-query";
 import { cn } from "~/lib/utils";
 
 import { Logo } from "../logo";
-import { Heading } from "../ui-ext/heading";
+import { Heading } from "../ui/heading";
 
 interface MobileNavProps {
   items?: MainNavItem[];

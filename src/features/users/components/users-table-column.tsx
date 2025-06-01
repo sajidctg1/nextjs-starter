@@ -27,8 +27,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useConfirm } from "~/components/ui-ext/alert";
 import { ROLES } from "~/constants";
+import { useConfirm } from "~/contexts/alert-context";
 import { type DataTableRowAction } from "~/lib/data-table/types";
 import { formatDate } from "~/lib/helpers";
 import { api } from "~/trpc/react";

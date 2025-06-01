@@ -11,7 +11,7 @@ import {
 } from "../ui/form";
 import { Switch } from "../ui/switch";
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends Record<string, unknown>> {
   name: keyof T;
   label?: string;
   desc?: string;
@@ -19,7 +19,7 @@ interface Props<T extends Record<string, any>> {
   disabled?: boolean;
 }
 
-export const FormSwitch = <T extends Record<string, any>>({
+export const FormSwitch = <T extends Record<string, unknown>>({
   name,
   label,
   desc,

@@ -3,6 +3,7 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 
+import { Heading } from "~/components/ui/heading";
 import {
   Sidebar,
   SidebarContent,
@@ -10,7 +11,6 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
-import { Heading } from "~/components/ui-ext/heading";
 import { authClient } from "~/lib/auth-client";
 
 import { NavDocuments } from "./nav-documents";

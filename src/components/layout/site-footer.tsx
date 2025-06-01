@@ -3,8 +3,8 @@ import Link from "next/link";
 import { siteConfig } from "~/configs/site-config";
 
 import { Logo } from "../logo";
-import { Container } from "../ui-ext/container";
-import { Heading } from "../ui-ext/heading";
+import { Container } from "../ui/container";
+import { Heading } from "../ui/heading";
 
 export const SiteFooter = () => {
   return (
