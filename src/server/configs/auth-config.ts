@@ -1,6 +1,7 @@
-import { env } from "~/env";
+import "server-only";
 
-import { absoluteUrl } from "../helpers";
+import { env } from "~/env";
+import { absoluteUrl } from "~/lib/helpers";
 
 export const authConfig = {
   enableSignup: true,
@@ -16,12 +17,12 @@ export const authConfig = {
     enabled: true,
     clientId: env.GOOGLE_CLIENT_ID,
     secret: env.GOOGLE_CLIENT_SECRET,
-    redirectUri: absoluteUrl("/sign-in/google/callback"),
+    redirectUri: absoluteUrl("/api/auth/callback/google"),
   },
   github: {
     enabled: false,
     clientId: "", //env.GITHUB_CLIENT_ID,
     secret: "", // env.GITHUB_CLIENT_SECRET,
-    redirectUri: absoluteUrl("/sign-in/github/callback"),
+    redirectUri: absoluteUrl("/api/auth/callback/github"),
   },
 };

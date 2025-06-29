@@ -1,3 +1,9 @@
+import { env } from "~/env";
+
+export function absoluteUrl(path: string) {
+  return `${removeSlashs(env.NEXT_PUBLIC_APP_URL)}/${removeSlashs(path)}`;
+}
+
 export function formatDate(
   date: Date | string | number | undefined,
   opts: Intl.DateTimeFormatOptions = {}

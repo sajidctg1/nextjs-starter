@@ -1,23 +1,32 @@
 "use client";
 
-import Link from "next/link";
-
 import { Button } from "~/components/ui/button";
+import { authClient } from "~/lib/auth-client";
 
 const Social = () => {
+  const handleSignin = async (provider: "google" | "github") => {
+    await authClient.signIn.social({ provider });
+  };
+
   return (
     <div className="space-y-4">
-      <Button variant={"secondary"} size={"lg"} className="w-full" asChild>
-        <Link href="/sign-in/google">
-          <GoogleIcon className="size-8" />
-          Continue with Google
-        </Link>
+      <Button
+        variant={"secondary"}
+        size={"lg"}
+        className="w-full"
+        onClick={() => handleSignin("google")}
+      >
+        <GoogleIcon className="size-8" />
+        Continue with Google
       </Button>
-      <Button variant={"secondary"} size={"lg"} className="w-full" asChild>
-        <Link href="/sign-in/github">
-          <GithubIcon className="size-8" />
-          Continue with GitHub
-        </Link>
+      <Button
+        variant={"secondary"}
+        size={"lg"}
+        className="w-full"
+        onClick={() => handleSignin("github")}
+      >
+        <GithubIcon className="size-8" />
+        Continue with GitHub
       </Button>
 
       <div className="relative py-4">
