@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { authClient } from "~/lib/auth-client";
-import { api } from "~/trpc/react";
+import { getQueryClient, useTRPC } from "~/trpc/react";
 
 interface Input {
   userId: string;
@@ -10,7 +10,9 @@ interface Input {
 }
 
 export const useBanUser = () => {
-  const utils = api.useUtils();
+  const queryClient = getQueryClient();
+  const trpc = useTRPC();
+
   return useMutation({
     mutationFn: async (input: Input) => {
       const { data, error } = await authClient.admin.banUser({
@@ -21,8 +23,8 @@ export const useBanUser = () => {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
-      utils.user.list.invalidate();
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.user.list.queryFilter());
     },
   });
 };

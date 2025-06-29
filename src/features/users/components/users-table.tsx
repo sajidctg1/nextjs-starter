@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ImportIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -14,7 +15,7 @@ import { Separator } from "~/components/ui/separator";
 import { useDataTable } from "~/hooks/use-data-table";
 import { exportTableToCSV } from "~/lib/data-table/export";
 import { type DataTableRowAction } from "~/lib/data-table/types";
-import { api } from "~/trpc/react";
+import { useTRPC } from "~/trpc/react";
 
 import type { UserSearchParams } from "../schemas";
 import { CreateUserModal } from "./create-user-modal";
@@ -26,8 +27,11 @@ interface Props {
 }
 
 export function UsersTable({ query }: Props) {
-  const { data, isFetching } = api.user.list.useQuery(query);
-  const { data: roleCounts } = api.user.userRoleCounts.useQuery();
+  const trpc = useTRPC();
+  const { data, isFetching } = useQuery(trpc.user.list.queryOptions(query));
+  const { data: roleCounts } = useQuery(
+    trpc.user.userRoleCounts.queryOptions()
+  );
 
   const [rowAction, setRowAction] =
     useState<DataTableRowAction<AuthUser> | null>(null);

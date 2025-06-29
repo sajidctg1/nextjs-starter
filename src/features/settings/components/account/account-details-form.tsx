@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -12,15 +13,19 @@ import { Button } from "~/components/ui/button";
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Skeleton } from "~/components/ui/skeleton";
 import { authClient } from "~/lib/auth-client";
-import { api } from "~/trpc/react";
+import { useTRPC } from "~/trpc/react";
 
 import { useUpdateProfile } from "../../api/update-profile";
 import { type UpdateProfilePayload, updateProfileSchema } from "../../schemas";
 
 export const AccountDetailsForm = () => {
+  const trpc = useTRPC();
+
   const { data: auth, isPending } = authClient.useSession();
   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
-  const { mutate: removeImage } = api.user.removeImage.useMutation();
+  const { mutate: removeImage } = useMutation(
+    trpc.user.removeImage.mutationOptions()
+  );
 
   const form = useForm<UpdateProfilePayload>({
     resolver: zodResolver(updateProfileSchema),

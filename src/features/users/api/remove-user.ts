@@ -1,10 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { authClient } from "~/lib/auth-client";
-import { api } from "~/trpc/react";
+import { getQueryClient, useTRPC } from "~/trpc/react";
 
 export const useRemoveUser = () => {
-  const utils = api.useUtils();
+  const queryClient = getQueryClient();
+  const trpc = useTRPC();
+
   return useMutation({
     mutationFn: async (input: { userId: string }) => {
       const { data, error } = await authClient.admin.removeUser({
@@ -13,8 +15,8 @@ export const useRemoveUser = () => {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
-      utils.user.list.invalidate();
+    onSuccess: async () => {
+      await queryClient.invalidateQueries(trpc.user.list.queryFilter());
     },
   });
 };

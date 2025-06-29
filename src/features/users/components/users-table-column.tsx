@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
   CalendarIcon,
@@ -31,7 +32,7 @@ import { ROLES } from "~/constants";
 import { useConfirm } from "~/contexts/alert-context";
 import { type DataTableRowAction } from "~/lib/data-table/types";
 import { formatDate } from "~/lib/helpers";
-import { api } from "~/trpc/react";
+import { getQueryClient, useTRPC } from "~/trpc/react";
 
 import { useBanUser } from "../api/ban-user";
 import { useRemoveUser } from "../api/remove-user";
@@ -163,11 +164,15 @@ export function getColumns({
       id: "actions",
       cell: function Cell({ row }) {
         const confirm = useConfirm();
-        const utils = api.useUtils();
+        const trpc = useTRPC();
+        const queryClient = getQueryClient();
+
         const { mutateAsync: banUser } = useBanUser();
         const { mutateAsync: unbanUser } = useUnbanUser();
         const { mutateAsync: removeUser } = useRemoveUser();
-        const { mutateAsync: updateRole } = api.user.updateRole.useMutation();
+        const { mutateAsync: updateRole } = useMutation(
+          trpc.user.updateRole.mutationOptions()
+        );
 
         async function handleDelete() {
           const ok = await confirm({
@@ -192,7 +197,7 @@ export function getColumns({
               },
               {
                 onSuccess: () => {
-                  utils.user.list.invalidate();
+                  queryClient.invalidateQueries(trpc.user.list.queryFilter());
                 },
               }
             ),
