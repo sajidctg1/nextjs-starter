@@ -4,14 +4,14 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, createAuthMiddleware, emailOTP } from "better-auth/plugins";
 
+import { authConfig } from "~/configs/auth-config";
 import { siteConfig } from "~/configs/site-config";
-import VerifyOTPEmail from "~/emails/verify-otp";
+import { db } from "~/db/drizzle";
 import { env } from "~/env";
 import { AUTH_URI, UNVERIFIED_EMAIL_COOKIE } from "~/features/auth/constants";
 
-import { authConfig } from "../configs/auth-config";
-import { db } from "../db/drizzle";
-import { sendEmail } from "./email-sender";
+import VerifyOTPEmail from "../email/components/verify-otp";
+import { sendEmail } from "../email/resend";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "pg", usePlural: false }),

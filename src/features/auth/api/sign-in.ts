@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 import { DEFAULT_LOGIN_REDIRECT } from "../constants";
 import type { SignInPayload } from "../schemas";

@@ -1,17 +1,18 @@
 import { revalidateTag } from "next/cache";
 
+import { db } from "~/db/drizzle";
+import {
+  getUserRoleCounts,
+  updateUser,
+  userPaginate,
+} from "~/db/repositories/user-repository";
 import {
   createUserSchema,
   updateUserRoleSchema,
   userSearchQuerySchema,
 } from "~/features/users/schemas";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { auth } from "~/server/lib/auth";
-import {
-  getUserRoleCounts,
-  updateUser,
-  userPaginate,
-} from "~/server/repositories/user-repository";
+import { auth } from "~/services/auth/auth";
+import { createTRPCRouter, protectedProcedure } from "~/trpc/init";
 
 export const userRouter = createTRPCRouter({
   create: protectedProcedure
@@ -53,8 +54,8 @@ export const userRouter = createTRPCRouter({
     return data ?? null;
   }),
 
-  latest: protectedProcedure.query(async ({ ctx }) => {
-    const data = await ctx.db.query.user.findFirst({
+  latest: protectedProcedure.query(async () => {
+    const data = await db.query.user.findFirst({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
     });
     return data ?? null;

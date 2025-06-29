@@ -1,6 +1,6 @@
 import { Heading } from "~/components/ui/heading";
 import SettingTabs from "~/features/settings/components/setting-tabs";
-import { authenticate } from "~/server/helpers";
+import { authenticate } from "~/services/auth/utils";
 
 export default async function AccountPage() {
   await authenticate();

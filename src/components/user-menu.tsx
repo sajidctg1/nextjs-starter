@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { AUTH_URI } from "~/features/auth/constants";
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 import { UserAvatar } from "./user-avatar";
 

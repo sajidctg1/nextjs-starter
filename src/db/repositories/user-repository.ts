@@ -2,11 +2,8 @@ import "server-only";
 
 import { and, asc, count, desc, eq, gt, ilike, inArray } from "drizzle-orm";
 
+import { dateFilterSql, db, table } from "~/db/drizzle";
 import { type UserSearchParams } from "~/features/users/schemas";
-import { dateFilterSql, db, table } from "~/server/db/drizzle";
-import { unstable_cache } from "~/server/lib/unstable-cache";
-
-const REVALIDATION_INTERVAL = 20; // seconds
 
 export const insertUser = async (data: typeof table.user.$inferInsert) => {
   return db.insert(table.user).values(data);
@@ -79,34 +76,25 @@ export async function userPaginate(input: UserSearchParams) {
 }
 
 export async function getUserRoleCounts() {
-  return unstable_cache(
-    async () => {
-      try {
-        return await db
-          .select({
-            role: table.user.role,
-            count: count(),
-          })
-          .from(table.user)
-          .groupBy(table.user.role)
-          .having(gt(count(), 0))
-          .then((res) =>
-            res.reduce(
-              (acc, { role, count }) => {
-                acc[role] = count;
-                return acc;
-              },
-              {} as Record<NonNullable<AuthUser["role"]>, number>
-            )
-          );
-      } catch (_err) {
-        return {} as Record<NonNullable<AuthUser["role"]>, number>;
-      }
-    },
-    ["user-role-counts"],
-    {
-      revalidate: REVALIDATION_INTERVAL,
-      tags: ["users"],
-    }
-  )();
+  try {
+    return await db
+      .select({
+        role: table.user.role,
+        count: count(),
+      })
+      .from(table.user)
+      .groupBy(table.user.role)
+      .having(gt(count(), 0))
+      .then((res) =>
+        res.reduce(
+          (acc, { role, count }) => {
+            acc[role] = count;
+            return acc;
+          },
+          {} as Record<NonNullable<AuthUser["role"]>, number>
+        )
+      );
+  } catch (_err) {
+    return {} as Record<NonNullable<AuthUser["role"]>, number>;
+  }
 }

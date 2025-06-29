@@ -11,7 +11,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 import { NavDocuments } from "./nav-documents";
 import { NavMain } from "./nav-main";

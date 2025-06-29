@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { AUTH_URI, SESSION_COOKIE } from "~/features/auth/constants";
 
-import { auth } from "./lib/auth";
+import { auth } from "./auth";
 
 export async function getSession() {
   return auth.api.getSession({ headers: await headers() });

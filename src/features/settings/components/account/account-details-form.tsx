@@ -12,7 +12,7 @@ import { ProfilePictureUploader } from "~/components/profile-picture-uploader";
 import { Button } from "~/components/ui/button";
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Skeleton } from "~/components/ui/skeleton";
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 import { useTRPC } from "~/trpc/react";
 
 import { useUpdateProfile } from "../../api/update-profile";

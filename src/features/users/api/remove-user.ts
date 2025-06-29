@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 import { getQueryClient, useTRPC } from "~/trpc/react";
 
 export const useRemoveUser = () => {

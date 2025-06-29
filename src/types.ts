@@ -4,7 +4,7 @@ import type {
 } from "better-auth/plugins";
 
 import type { ROLES } from "./constants";
-import type { table } from "./server/db/drizzle";
+import type { table } from "./db/drizzle";
 
 declare global {
   type UserRole = (typeof ROLES)[number];

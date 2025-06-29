@@ -3,7 +3,7 @@ import "server-only";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 
-import { authenticate } from "~/server/helpers";
+import { authenticate } from "~/services/auth/utils";
 
 const f = createUploadthing();
 

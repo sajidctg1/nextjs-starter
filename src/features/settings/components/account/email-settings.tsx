@@ -2,7 +2,7 @@
 
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Input } from "~/components/ui/input";
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 export const EmailSettingsForm = () => {
   const { data: auth } = authClient.useSession();

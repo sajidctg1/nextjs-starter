@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 export const useListSessions = () => {
   return useQuery({

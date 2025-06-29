@@ -6,7 +6,7 @@ import { UAParser } from "ua-parser-js";
 import { Badge } from "~/components/ui/badge";
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Separator } from "~/components/ui/separator";
-import { authClient } from "~/lib/auth-client";
+import { authClient } from "~/services/auth/auth-client";
 
 import { useListSessions } from "../../api/list-sessions";
 import {

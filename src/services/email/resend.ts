@@ -2,7 +2,7 @@ import "server-only";
 
 import { type ReactNode } from "react";
 
-import { emailConfig } from "~/server/configs/email-config";
+import { emailConfig } from "~/configs/email-config";
 
 //import { Resend } from "resend";
 

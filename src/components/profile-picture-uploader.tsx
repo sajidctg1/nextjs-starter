@@ -13,7 +13,7 @@ import {
   FileUploadItemPreview,
   FileUploadItemProgress,
 } from "~/components/ui/file-upload";
-import { uploadFiles } from "~/lib/uploadthing/utils";
+import { uploadFiles } from "~/services/storage/uploadthing/utils";
 
 interface Props {
   maxSize: number;
