@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -12,37 +11,25 @@ import { ProfilePictureUploader } from "~/components/profile-picture-uploader";
 import { Button } from "~/components/ui/button";
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Skeleton } from "~/components/ui/skeleton";
-import { authClient } from "~/services/auth/auth-client";
-import { useTRPC } from "~/trpc/react";
+import { useSession } from "~/features/auth/api/session";
 
+import { useRemoveProfileImage } from "../../api/remove-profile-image";
 import { useUpdateProfile } from "../../api/update-profile";
 import { type UpdateProfilePayload, updateProfileSchema } from "../../schemas";
 
 export const AccountDetailsForm = () => {
-  const trpc = useTRPC();
+  const { data: auth, isPending } = useSession();
 
-  const { data: auth, isPending } = authClient.useSession();
   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
-  const { mutate: removeImage } = useMutation(
-    trpc.user.removeImage.mutationOptions()
-  );
+  const { mutate: removeImage } = useRemoveProfileImage();
 
   const form = useForm<UpdateProfilePayload>({
     resolver: zodResolver(updateProfileSchema),
     defaultValues: {
       name: auth?.user?.name,
-      image: auth?.user.image ?? undefined,
+      image: auth?.user?.image ?? undefined,
     },
   });
-
-  const handleRemoveAvatar = () => {
-    updateProfile(
-      { image: null },
-      {
-        onSuccess: () => form.setValue("image", null),
-      }
-    );
-  };
 
   const handleSubmit = (data: UpdateProfilePayload) => {
     updateProfile(data);
@@ -74,7 +61,7 @@ export const AccountDetailsForm = () => {
               size={"icon"}
               className="size-8"
               disabled={isUpdating}
-              onClick={handleRemoveAvatar}
+              onClick={() => removeImage()}
             >
               <XIcon />
             </Button>

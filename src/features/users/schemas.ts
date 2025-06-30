@@ -26,7 +26,7 @@ export const updateUserRoleSchema = z.object({
 export type UpdateUserRolePayload = z.infer<typeof updateUserRoleSchema>;
 
 export const userSearchParamsCache = createSearchParamsCache({
-  ...getBaseSearchParamsCache<AuthUser>(),
+  ...getBaseSearchParamsCache<User>(),
   name: parseAsString,
   role: parseAsArrayOf(z.enum(ROLES)),
   status: parseAsArrayOf(z.enum(["banned", "active"])),
@@ -37,7 +37,7 @@ export type UserSearchParams = Awaited<
 >;
 
 export const userSearchQuerySchema = z.object({
-  ...getBaseSearchQuerySchema(["createdAt", "name"] as Array<keyof AuthUser>),
+  ...getBaseSearchQuerySchema(["createdAt", "name"] as Array<keyof User>),
   name: z.string().nullable(),
   role: z.enum(ROLES).array().nullable(),
   status: z.enum(["banned", "active"]).array().nullable(),

@@ -2,7 +2,6 @@
 
 import { BadgeCheckIcon, BellIcon, CogIcon, LogOutIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,25 +12,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { useSession } from "~/features/auth/api/session";
+import { useSignOut } from "~/features/auth/api/sign-out";
 import { AUTH_URI } from "~/features/auth/constants";
-import { authClient } from "~/services/auth/auth-client";
 
 import { UserAvatar } from "./user-avatar";
 
 export const UserMenu = () => {
-  const router = useRouter();
-  const { data } = authClient.useSession();
+  const { data } = useSession();
   const user = data?.user;
 
-  const handleSignOut = async () => {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess() {
-          router.push(AUTH_URI.signIn);
-        },
-      },
-    });
-  };
+  const { mutate: signOut } = useSignOut();
 
   if (!user) {
     return (
@@ -81,7 +72,7 @@ export const UserMenu = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="text-destructive cursor-pointer"
-          onClick={handleSignOut}
+          onClick={() => signOut()}
         >
           <LogOutIcon /> Sign out
         </DropdownMenuItem>

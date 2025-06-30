@@ -6,7 +6,7 @@ import { UAParser } from "ua-parser-js";
 import { Badge } from "~/components/ui/badge";
 import { ButtonLoading } from "~/components/ui/button-loading";
 import { Separator } from "~/components/ui/separator";
-import { authClient } from "~/services/auth/auth-client";
+import { useSession } from "~/features/auth/api/session";
 
 import { useListSessions } from "../../api/list-sessions";
 import {
@@ -15,7 +15,7 @@ import {
 } from "../../api/revoke-session";
 
 export const UserSessions = () => {
-  const { data: currentSession } = authClient.useSession();
+  const { data: currentSession } = useSession();
   const { data: sessions, isPending } = useListSessions();
 
   const { mutate: revokeAllSession, isPending: isTerminatingAll } =
@@ -43,7 +43,7 @@ export const UserSessions = () => {
                 <div className="text-muted-foreground space-y-1 text-sm">
                   <p className="text-foreground flex gap-2 text-base font-semibold">
                     {ua.getOS().name} ({ua.getCPU().toString()})
-                    {session.id === currentSession?.session.id && (
+                    {session.id === currentSession?.session?.id && (
                       <Badge>This Device</Badge>
                     )}
                   </p>
@@ -55,7 +55,7 @@ export const UserSessions = () => {
                     {`${session.ipAddress ?? "Unknown"} ${session.createdAt.toDateString()} ${session.createdAt.toLocaleTimeString()}`}
                   </p>
                 </div>
-                {session.id !== currentSession?.session.id && (
+                {session.id !== currentSession?.session?.id && (
                   <ButtonLoading
                     loading={isTerminating}
                     size="sm"

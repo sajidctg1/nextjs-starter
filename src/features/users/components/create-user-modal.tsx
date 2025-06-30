@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -21,17 +20,14 @@ import {
   ModalTitle,
   ModalTrigger,
 } from "~/components/ui/modal";
-import { useTRPC } from "~/trpc/react";
 
+import { useCreateUser } from "../api/create-user";
 import { type CreateUserPayload, createUserSchema } from "../schemas";
 
 export const CreateUserModal = () => {
-  const trpc = useTRPC();
   const [open, setOpen] = useState(false);
 
-  const { mutate: createUser, isPending } = useMutation(
-    trpc.user.create.mutationOptions()
-  );
+  const { mutate: createUser, isPending } = useCreateUser();
 
   const form = useForm<CreateUserPayload>({
     resolver: zodResolver(createUserSchema),

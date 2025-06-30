@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
   CalendarIcon,
@@ -32,15 +31,15 @@ import { ROLES } from "~/constants";
 import { useConfirm } from "~/contexts/alert-context";
 import { type DataTableRowAction } from "~/lib/data-table/types";
 import { formatDate } from "~/lib/helpers";
-import { getQueryClient, useTRPC } from "~/trpc/react";
 
 import { useBanUser } from "../api/ban-user";
 import { useRemoveUser } from "../api/remove-user";
 import { useUnbanUser } from "../api/unban-user";
+import { useUpdateRole } from "../api/update-role";
 
 interface GetColumnsProps {
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<AuthUser> | null>
+    React.SetStateAction<DataTableRowAction<User> | null>
   >;
   roleCounts?: Record<"admin" | "user", number>;
 }
@@ -48,7 +47,7 @@ interface GetColumnsProps {
 export function getColumns({
   setRowAction,
   roleCounts,
-}: GetColumnsProps): ColumnDef<AuthUser>[] {
+}: GetColumnsProps): ColumnDef<User>[] {
   return [
     {
       id: "select",
@@ -164,15 +163,11 @@ export function getColumns({
       id: "actions",
       cell: function Cell({ row }) {
         const confirm = useConfirm();
-        const trpc = useTRPC();
-        const queryClient = getQueryClient();
 
         const { mutateAsync: banUser } = useBanUser();
         const { mutateAsync: unbanUser } = useUnbanUser();
         const { mutateAsync: removeUser } = useRemoveUser();
-        const { mutateAsync: updateRole } = useMutation(
-          trpc.user.updateRole.mutationOptions()
-        );
+        const { mutateAsync: updateRole } = useUpdateRole();
 
         async function handleDelete() {
           const ok = await confirm({
@@ -190,17 +185,10 @@ export function getColumns({
         async function handleRoleUpdate(value: string) {
           if (value === row.original.role) return;
           toast.promise(
-            updateRole(
-              {
-                role: value as "user",
-                userId: row.original.id,
-              },
-              {
-                onSuccess: () => {
-                  queryClient.invalidateQueries(trpc.user.list.queryFilter());
-                },
-              }
-            ),
+            updateRole({
+              role: value as "user",
+              userId: row.original.id,
+            }),
             {
               loading: "Updating...",
               success: "Role updated",

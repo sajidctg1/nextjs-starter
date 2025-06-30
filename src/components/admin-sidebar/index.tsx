@@ -11,7 +11,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "~/components/ui/sidebar";
-import { authClient } from "~/services/auth/auth-client";
+import { useSession } from "~/features/auth/api/session";
 
 import { NavDocuments } from "./nav-documents";
 import { NavMain } from "./nav-main";
@@ -19,7 +19,7 @@ import { NavSecondary } from "./nav-secondary";
 import { NavUser } from "./nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data } = authClient.useSession();
+  const { data } = useSession();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -40,7 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        {data?.user && <NavUser user={data.user as AuthUser} />}
+        {data?.user && <NavUser user={data.user} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

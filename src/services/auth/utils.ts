@@ -1,22 +1,18 @@
-import "server-only";
+import type { Session, User } from "better-auth/types";
 
-import { cookies, headers } from "next/headers";
-import { redirect } from "next/navigation";
-
-import { AUTH_URI, SESSION_COOKIE } from "~/features/auth/constants";
-
-import { auth } from "./auth";
-
-export async function getSession() {
-  return auth.api.getSession({ headers: await headers() });
+export function mapAuthUser(user: User): AuthUser {
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    image: user.image,
+  };
 }
 
-export async function authenticate() {
-  const authn = await auth.api.getSession({ headers: await headers() });
-  if (!authn?.user) {
-    const cs = await cookies();
-    cs.delete(SESSION_COOKIE);
-    return redirect(AUTH_URI.signIn);
-  }
-  return authn;
+export function mapAuthSession(session: Session): AuthSession {
+  return {
+    id: session.id,
+    token: session.token,
+    expiresAt: session.expiresAt,
+  };
 }

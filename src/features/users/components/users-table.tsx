@@ -1,6 +1,5 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ImportIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -15,8 +14,9 @@ import { Separator } from "~/components/ui/separator";
 import { useDataTable } from "~/hooks/use-data-table";
 import { exportTableToCSV } from "~/lib/data-table/export";
 import { type DataTableRowAction } from "~/lib/data-table/types";
-import { useTRPC } from "~/trpc/react";
 
+import { useUserList } from "../api/user-list";
+import { useUserRoleCounts } from "../api/user-role-counts";
 import type { UserSearchParams } from "../schemas";
 import { CreateUserModal } from "./create-user-modal";
 import { UsersTableActionBar } from "./users-table-action-bar";
@@ -27,14 +27,11 @@ interface Props {
 }
 
 export function UsersTable({ query }: Props) {
-  const trpc = useTRPC();
-  const { data, isFetching } = useQuery(trpc.user.list.queryOptions(query));
-  const { data: roleCounts } = useQuery(
-    trpc.user.userRoleCounts.queryOptions()
+  const { data, isFetching } = useUserList(query);
+  const { data: roleCounts } = useUserRoleCounts();
+  const [rowAction, setRowAction] = useState<DataTableRowAction<User> | null>(
+    null
   );
-
-  const [rowAction, setRowAction] =
-    useState<DataTableRowAction<AuthUser> | null>(null);
 
   const columns = useMemo(
     () => getColumns({ setRowAction, roleCounts }),

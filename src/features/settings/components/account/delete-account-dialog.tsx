@@ -18,7 +18,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { authClient } from "~/services/auth/auth-client";
+import { useSession } from "~/features/auth/api/session";
 
 import { useDeleteAccount } from "../../api/delete-account";
 
@@ -27,8 +27,8 @@ const schema = z.object({
 });
 
 export const DeleteAccountDialog = () => {
-  const { data: auth } = authClient.useSession();
   const [open, setOpen] = useState(false);
+  const { data: auth } = useSession();
 
   const { mutate: deleteAccoount, isPending } = useDeleteAccount();
 
@@ -40,7 +40,7 @@ export const DeleteAccountDialog = () => {
   });
 
   const handleDelete = async () => {
-    if (!auth?.session.token) return;
+    if (!auth?.session?.token) return;
     deleteAccoount({
       token: auth.session.token,
       password: form.getValues("password"),

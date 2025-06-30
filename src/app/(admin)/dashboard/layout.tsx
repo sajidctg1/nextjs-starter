@@ -9,7 +9,7 @@ import {
   SidebarTrigger,
 } from "~/components/ui/sidebar";
 import { constructMetadata } from "~/lib/construct-metadata";
-import { authenticate } from "~/services/auth/utils";
+import { authenticate } from "~/services/auth";
 
 export const metadata = constructMetadata({ title: "Dashboard" });
 

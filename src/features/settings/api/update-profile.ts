@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 import { authClient } from "~/services/auth/auth-client";
+import { getQueryClient } from "~/trpc/react";
 
 interface Input {
   name?: string;
@@ -9,6 +10,8 @@ interface Input {
 }
 
 export const useUpdateProfile = () => {
+  const queryClient = getQueryClient();
+
   return useMutation({
     mutationFn: async ({ name, image }: Input) => {
       const { data, error } = await authClient.updateUser({
@@ -20,6 +23,7 @@ export const useUpdateProfile = () => {
     },
     onSuccess: () => {
       toast.success("Profile updated!");
+      queryClient.invalidateQueries({ queryKey: ["session"] });
     },
   });
 };

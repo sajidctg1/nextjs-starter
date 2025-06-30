@@ -1,18 +1,17 @@
-import { revalidateTag } from "next/cache";
-
 import { db } from "~/db/drizzle";
 import {
   getUserRoleCounts,
   updateUser,
   userPaginate,
 } from "~/db/repositories/user-repository";
+import { auth } from "~/services/auth/better-auth";
+import { createTRPCRouter, protectedProcedure } from "~/trpc/init";
+
 import {
   createUserSchema,
   updateUserRoleSchema,
   userSearchQuerySchema,
-} from "~/features/users/schemas";
-import { auth } from "~/services/auth/auth";
-import { createTRPCRouter, protectedProcedure } from "~/trpc/init";
+} from "../schemas";
 
 export const userRouter = createTRPCRouter({
   create: protectedProcedure
@@ -27,7 +26,6 @@ export const userRouter = createTRPCRouter({
           password: input.password,
         },
       });
-      revalidateTag("users");
     }),
 
   list: protectedProcedure

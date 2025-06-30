@@ -13,7 +13,7 @@ import {
   HttpError,
   ValidationError,
 } from "~/lib/exceptions";
-import { auth } from "~/services/auth/auth";
+import { auth } from "~/services/auth/better-auth";
 
 // Base client.
 export const actionClient = createSafeActionClient({

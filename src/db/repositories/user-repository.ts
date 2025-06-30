@@ -10,9 +10,9 @@ export const insertUser = async (data: typeof table.user.$inferInsert) => {
 };
 
 export const updateUser = async (
-  id: AuthUser["id"],
+  id: User["id"],
   data: Partial<
-    Pick<AuthUser, "name" | "email" | "image" | "emailVerified" | "role">
+    Pick<User, "name" | "email" | "image" | "emailVerified" | "role">
   >
 ) => {
   return db
@@ -91,10 +91,10 @@ export async function getUserRoleCounts() {
             acc[role] = count;
             return acc;
           },
-          {} as Record<NonNullable<AuthUser["role"]>, number>
+          {} as Record<NonNullable<User["role"]>, number>
         )
       );
   } catch (_err) {
-    return {} as Record<NonNullable<AuthUser["role"]>, number>;
+    return {} as Record<NonNullable<User["role"]>, number>;
   }
 }

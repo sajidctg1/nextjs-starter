@@ -17,7 +17,7 @@ const actions = ["update-status", "export", "delete"] as const;
 type Action = (typeof actions)[number];
 
 interface UsersTableActionBarProps {
-  table: Table<AuthUser>;
+  table: Table<User>;
 }
 
 export function UsersTableActionBar({ table }: UsersTableActionBarProps) {
