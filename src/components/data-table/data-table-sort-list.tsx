@@ -2,10 +2,10 @@
 
 import type { ColumnSort, SortDirection, Table } from "@tanstack/react-table";
 import {
-  ArrowDownUpIcon,
-  ChevronsUpDownIcon,
-  GripVerticalIcon,
-  Trash2Icon,
+  ArrowDownUp,
+  ChevronsUpDown,
+  GripVertical,
+  Trash2,
 } from "lucide-react";
 import * as React from "react";
 
@@ -175,7 +175,7 @@ export function DataTableSortList<TData>({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" size="sm" onKeyDown={onTriggerKeyDown}>
-            <ArrowDownUpIcon />
+            <ArrowDownUp />
             Sort
             {sorting.length > 0 && (
               <Badge
@@ -211,10 +211,7 @@ export function DataTableSortList<TData>({
           </div>
           {sorting.length > 0 && (
             <SortableContent asChild>
-              <div
-                role="list"
-                className="flex max-h-[300px] flex-col gap-2 overflow-y-auto p-1"
-              >
+              <ul className="flex max-h-[300px] flex-col gap-2 overflow-y-auto p-1">
                 {sorting.map((sort) => (
                   <DataTableSortItem
                     key={sort.id}
@@ -226,7 +223,7 @@ export function DataTableSortList<TData>({
                     onSortRemove={onSortRemove}
                   />
                 ))}
-              </div>
+              </ul>
             </SortableContent>
           )}
           <div className="flex w-full items-center gap-2">
@@ -290,7 +287,7 @@ function DataTableSortItem({
     React.useState(false);
 
   const onItemKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
+    (event: React.KeyboardEvent<HTMLLIElement>) => {
       if (
         event.target instanceof HTMLInputElement ||
         event.target instanceof HTMLTextAreaElement
@@ -312,8 +309,7 @@ function DataTableSortItem({
 
   return (
     <SortableItem value={sort.id} asChild>
-      <div
-        role="listitem"
+      <li
         id={sortItemId}
         tabIndex={-1}
         className="flex items-center gap-2"
@@ -323,14 +319,13 @@ function DataTableSortItem({
           <PopoverTrigger asChild>
             <Button
               id={fieldTriggerId}
-              role="combobox"
               aria-controls={fieldListboxId}
               variant="outline"
               size="sm"
               className="w-44 justify-between rounded font-normal"
             >
               <span className="truncate">{columnLabels.get(sort.id)}</span>
-              <ChevronsUpDownIcon className="opacity-50" />
+              <ChevronsUpDown className="opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent
@@ -388,7 +383,7 @@ function DataTableSortItem({
           className="size-8 shrink-0 rounded"
           onClick={() => onSortRemove(sort.id)}
         >
-          <Trash2Icon />
+          <Trash2 />
         </Button>
         <SortableItemHandle asChild>
           <Button
@@ -396,10 +391,10 @@ function DataTableSortItem({
             size="icon"
             className="size-8 shrink-0 rounded"
           >
-            <GripVerticalIcon />
+            <GripVertical />
           </Button>
         </SortableItemHandle>
-      </div>
+      </li>
     </SortableItem>
   );
 }

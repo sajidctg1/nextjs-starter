@@ -1,17 +1,16 @@
 "use client";
 
 import type { Column, Table } from "@tanstack/react-table";
-import { XIcon } from "lucide-react";
+import { X } from "lucide-react";
 import * as React from "react";
 
+import { DataTableDateFilter } from "~/components/data-table/data-table-date-filter";
+import { DataTableFacetedFilter } from "~/components/data-table/data-table-faceted-filter";
+import { DataTableSliderFilter } from "~/components/data-table/data-table-slider-filter";
+import { DataTableViewOptions } from "~/components/data-table/data-table-view-options";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
-
-import { DataTableDateFilter } from "./data-table-date-filter";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { DataTableSliderFilter } from "./data-table-slider-filter";
-import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> extends React.ComponentProps<"div"> {
   table: Table<TData>;
@@ -53,7 +52,7 @@ export function DataTableToolbar<TData>({
             className="border-dashed"
             onClick={onReset}
           >
-            <XIcon />
+            <X />
             Reset
           </Button>
         )}

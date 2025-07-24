@@ -1,7 +1,7 @@
 "use client";
 
 import type { Column } from "@tanstack/react-table";
-import { CheckIcon, PlusCircle, XCircle } from "lucide-react";
+import { Check, PlusCircle, XCircle } from "lucide-react";
 import * as React from "react";
 
 import { Badge } from "~/components/ui/badge";
@@ -151,7 +151,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                           : "opacity-50 [&_svg]:invisible"
                       )}
                     >
-                      <CheckIcon />
+                      <Check />
                     </div>
                     {option.icon && <option.icon />}
                     <span className="truncate">{option.label}</span>

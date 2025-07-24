@@ -5,8 +5,8 @@ import {
   ChevronDown,
   ChevronsUpDown,
   ChevronUp,
-  EyeOffIcon,
-  XIcon,
+  EyeOff,
+  X,
 } from "lucide-react";
 
 import {
@@ -77,7 +77,7 @@ export function DataTableColumnHeader<TData, TValue>({
                 className="[&_svg]:text-muted-foreground pl-2"
                 onClick={() => column.clearSorting()}
               >
-                <XIcon />
+                <X />
                 Reset
               </DropdownMenuItem>
             )}
@@ -89,7 +89,7 @@ export function DataTableColumnHeader<TData, TValue>({
             checked={!column.getIsVisible()}
             onClick={() => column.toggleVisibility(false)}
           >
-            <EyeOffIcon />
+            <EyeOff />
             Hide
           </DropdownMenuCheckboxItem>
         )}

@@ -1,7 +1,7 @@
 "use client";
 
 import type { Table } from "@tanstack/react-table";
-import { LoaderIcon, XIcon } from "lucide-react";
+import { Loader, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
@@ -106,7 +106,7 @@ function DataTableActionBarAction({
       disabled={disabled || isPending}
       {...props}
     >
-      {isPending ? <LoaderIcon className="animate-spin" /> : children}
+      {isPending ? <Loader className="animate-spin" /> : children}
     </Button>
   );
 
@@ -153,7 +153,7 @@ function DataTableActionBarSelection<TData>({
             className="size-5"
             onClick={onClearSelection}
           >
-            <XIcon className="size-3.5" />
+            <X className="size-3.5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent

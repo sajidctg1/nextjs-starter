@@ -1,18 +1,18 @@
 "use client";
 
 import type { Column, Table } from "@tanstack/react-table";
-import { generateId } from "better-auth";
 import {
-  BadgeCheckIcon,
+  BadgeCheck,
   CalendarIcon,
-  CheckIcon,
-  ListFilterIcon,
-  TextIcon,
-  XIcon,
+  Check,
+  ListFilter,
+  Text,
+  X,
 } from "lucide-react";
 import { useQueryState } from "nuqs";
 import * as React from "react";
 
+import { DataTableRangeFilter } from "~/components/data-table/data-table-range-filter";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
 import {
@@ -45,8 +45,6 @@ import {
 } from "~/lib/data-table/types";
 import { formatDate } from "~/lib/helpers";
 import { cn } from "~/lib/utils";
-
-import { DataTableRangeFilter } from "./data-table-range-filter";
 
 const FILTERS_KEY = "filters";
 const DEBOUNCE_MS = 300;
@@ -138,7 +136,7 @@ export function DataTableFilterMenu<TData>({
         operator: getDefaultFilterOperator(
           column.columnDef.meta?.variant ?? "text"
         ),
-        filterId: generateId(8),
+        filterId: crypto.randomUUID(),
       };
 
       debouncedSetFilters([...filters, newFilter]);
@@ -254,7 +252,7 @@ export function DataTableFilterMenu<TData>({
           className="size-8"
           onClick={onFiltersReset}
         >
-          <XIcon />
+          <X />
         </Button>
       )}
       <Popover open={open} onOpenChange={onOpenChange}>
@@ -267,7 +265,7 @@ export function DataTableFilterMenu<TData>({
             ref={triggerRef}
             onKeyDown={onTriggerKeyDown}
           >
-            <ListFilterIcon />
+            <ListFilter />
             {filters.length > 0 ? null : "Filter"}
           </Button>
         </PopoverTrigger>
@@ -360,12 +358,11 @@ function DataTableFilterItem<TData>({
     const [showValueSelector, setShowValueSelector] = React.useState(false);
 
     const column = columns.find((column) => column.id === filter.id);
-    if (!column) return null;
 
     const operatorListboxId = `${filterItemId}-operator-listbox`;
     const inputId = `${filterItemId}-input`;
 
-    const columnMeta = column.columnDef.meta;
+    const columnMeta = column?.columnDef.meta;
     const filterOperators = getFilterOperators(filter.variant);
 
     const onItemKeyDown = React.useCallback(
@@ -394,6 +391,8 @@ function DataTableFilterItem<TData>({
         onFilterRemove,
       ]
     );
+
+    if (!column) return null;
 
     return (
       <div
@@ -448,7 +447,7 @@ function DataTableFilterItem<TData>({
                       <span className="truncate">
                         {column.columnDef.meta?.label ?? column.id}
                       </span>
-                      <CheckIcon
+                      <Check
                         className={cn(
                           "ml-auto",
                           column.id === filter.id ? "opacity-100" : "opacity-0"
@@ -511,7 +510,7 @@ function DataTableFilterItem<TData>({
           className="dark:bg-input/30 h-full rounded-none rounded-r-md border border-l-0 px-1.5 font-normal"
           onClick={() => onFilterRemove(filter.filterId)}
         >
-          <XIcon className="size-3.5" />
+          <X className="size-3.5" />
         </Button>
       </div>
     );
@@ -570,8 +569,8 @@ function FilterValueSelector<TData>({
     case "dateRange":
       return (
         <Calendar
-          initialFocus
           mode="single"
+          captionLayout="dropdown"
           selected={value ? new Date(value) : undefined}
           onSelect={(date) => onSelect(date?.getTime().toString() ?? "")}
         />
@@ -589,12 +588,12 @@ function FilterValueSelector<TData>({
           >
             {isEmpty ? (
               <>
-                <TextIcon />
+                <Text />
                 <span>Type to add filter...</span>
               </>
             ) : (
               <>
-                <BadgeCheckIcon />
+                <BadgeCheck />
                 <span className="truncate">Filter by &quot;{value}&quot;</span>
               </>
             )}
@@ -780,7 +779,7 @@ function onFilterInputRender<TData>({
                       {option.icon && <option.icon />}
                       <span className="truncate">{option.label}</span>
                       {filter.variant === "multiSelect" && (
-                        <CheckIcon
+                        <Check
                           className={cn(
                             "ml-auto",
                             selectedValues.includes(option.value)
@@ -841,7 +840,7 @@ function onFilterInputRender<TData>({
             {filter.operator === "isBetween" ? (
               <Calendar
                 mode="range"
-                initialFocus
+                captionLayout="dropdown"
                 selected={
                   dateValue.length === 2
                     ? {
@@ -867,7 +866,7 @@ function onFilterInputRender<TData>({
             ) : (
               <Calendar
                 mode="single"
-                initialFocus
+                captionLayout="dropdown"
                 selected={
                   dateValue[0] ? new Date(Number(dateValue[0])) : undefined
                 }
